@@ -18,6 +18,10 @@ class UsersController < ApplicationController
         end
     end
 
+    def forget
+        update_attribute(:remember_digest, nil)
+    end
+    
     private
     def user_params
         params.require(:user).permit(:name, :email, :password,
