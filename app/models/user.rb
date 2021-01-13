@@ -12,6 +12,8 @@ class User< ApplicationRecord
 
     has_secure_password
 
+    has_many :microposts, dependent: :destroy
+
     class << self
         def digest(string)
           cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -35,6 +37,14 @@ class User< ApplicationRecord
     
     def forget
         update_attributes(remember_digest: nil)
+    end
+
+    def feed
+      microposts
+    end 
+
+    def display_image
+      image.variant(resize_to_limit: [500, 500])
     end
 
     private
